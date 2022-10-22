@@ -1,0 +1,117 @@
+
+###
+GET {{host}}/users/all
+Authorization: Bearer {{token}}
+
+###
+GET {{host}}/photos
+Authorization: Bearer {{token}}
+
+###
+POST localhost:3000/users/register
+Content-Type: application/json
+
+{
+  "full_name": "budiman",
+  "email": "budiman@gmail.com",
+  "username": "budiman",
+  "password": "Diory123?",
+  "profile_image_url": "https://res.cloudinary.com/dt3pzvmfg/image/upload/v1658573452/x1bbffnq1cold8srit8p.jpg",
+  "age": 21,
+  "phone_number":"081273232"
+}
+
+###
+POST {{host}}/users/login
+Content-Type: application/json
+
+{
+  "email": "budiman@gmail.com",
+  "password": "Diory123?"
+}
+
+###
+PUT {{host}}/users/6
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "age": 23
+}
+
+###
+POST {{host}}/photos/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "poster_image_url": "https://res.cloudinary.com/dt3pzvmfg/image/upload/v1658573452/x1bbffnq1cold8srit8p.jpg",
+  "title": "Photo sinaga 4",
+  "caption": "Foto sinaga 4"
+}
+
+###
+PUT {{host}}/photos/2
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Foto Sinaga 1"
+}
+###
+DELETE {{host}}/users/1
+Authorization: Bearer {{token}}
+
+###
+DELETE {{host}}/photos/1
+Authorization: Bearer {{token}}
+
+###
+POST {{host}}/comments
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "comment": "Photonya keren dari budiman keren",
+  "PhotoId": 9
+}
+
+###
+PUT {{host}}/comments/5
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "comment": "Photonya keren dari budiman"
+}
+###
+DELETE {{host}}/comments/4
+Authorization: Bearer {{token}}
+
+###
+GET {{host}}/comments
+Authorization: Bearer {{token}}
+
+###
+POST {{host}}/medsos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "facebook",
+  "social_media_url": "https://www.facebook.com/budiman.sinaga/"
+}
+
+###
+GET {{host}}/medsos
+Authorization: Bearer {{token}}
+
+###
+PUT {{host}}/medsos/2
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "facebook",
+  "social_media_url": "https://www.facebook.com/budiman.sinaga/"
+}
