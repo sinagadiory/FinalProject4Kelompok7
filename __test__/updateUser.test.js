@@ -110,7 +110,7 @@ describe('PUT /users/:id', () => {
       .send({ email: "budimanaja@gmail.com" })
       .expect(200);
     expect(body[0]).toEqual({
-      id: 1, full_name: user.full_name, email: "budimanaja1@gmail.com", username: user.username, profile_image_url: user.profile_image_url, password: expect.any(String), age: 22, phone_number: Number(user.phone_number), createdAt: expect.any(String),
+      id: 1, full_name: user.full_name, email: "budimanaja@gmail.com", username: user.username, profile_image_url: user.profile_image_url, password: expect.any(String), age: 22, phone_number: Number(user.phone_number), createdAt: expect.any(String),
       updatedAt: expect.any(String)
     })
   });
