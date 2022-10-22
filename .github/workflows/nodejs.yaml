@@ -31,8 +31,8 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
-      - run: npx sequelize-cli db:create --env test
-      - run: npx sequelize-cli db:migrate --env test
+      - run: npm run db:create --env test
+      - run: npm run db:migrate --env test
       - run: npm test
         env:
           NODE_ENV: test
