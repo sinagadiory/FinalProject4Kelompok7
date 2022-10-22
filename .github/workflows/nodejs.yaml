@@ -31,8 +31,8 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
-      - run: npm run db:create --env test
-      - run: npm run db:migrate --env test
+      - run: npm run db:create:test
+      - run: npm run db:migrate:test
       - run: npm test
         env:
           NODE_ENV: test
