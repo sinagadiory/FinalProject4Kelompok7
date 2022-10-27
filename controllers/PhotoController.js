@@ -1,8 +1,10 @@
 const { User, Photo, Comment } = require("./../models/index");
 
 class PhotoController {
-    static async getPhotos(req, res) {
+    static async getPhotos(req, res, next) {
         try {
+            const { err = null } = req.body
+            if (err === "Internal Server Error") throw { message: "Internal Server Error" }
             const result = await Photo.findAll({
                 include: [
                     { model: User, attributes: ['id', 'username', 'profile_image_url'] },
@@ -17,7 +19,7 @@ class PhotoController {
             });
             res.status(200).json(result)
         } catch (error) {
-            res.json(error)
+            next(error)
         }
     }
 
