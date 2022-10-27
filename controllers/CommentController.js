@@ -21,7 +21,7 @@ class CommentController {
             const { comment, PhotoId } = req.body;
             const UserId = req.user.id;
             const result = await Comment.create({ UserId, PhotoId, comment }, {returning:true});
-            res.status(200).json(result);
+            res.status(201).json(result);
         }catch (err) {
             next(err);
         }

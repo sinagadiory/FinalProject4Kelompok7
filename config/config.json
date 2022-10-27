@@ -1,16 +1,16 @@
 {
   "development": {
     "username": "postgres",
-    "password": "12345",
-    "database": "finalproject2test",
+    "password": "password123!",
+    "database": "finalproject2",
     "host": "localhost",
     "dialect": "postgres",
     "port": 5432
   },
   "test": {
     "username": "postgres",
-    "password": "12345",
-    "database": "finalproject4test2",
+    "password": "password123!",
+    "database": "finalproject4test",
     "host": "localhost",
     "port": 5432,
     "dialect": "postgres",
