@@ -113,6 +113,14 @@ describe('POST /comments', () => {
       .expect(400);
     expect(body.message).toEqual(expect.arrayContaining(['PhotoId cannot be an empty string']));
   });
+  test('should return HTTP code 400 when comment with empty string PhotoId', async () => {
+    const { body } = await request(app)
+      .post('/comments')
+      .send({ comment: CommentTest.comment, PhotoId: 100 })
+      .set('Authorization', `Bearer ${userToken}`)
+      .expect(400);
+    expect(body.message).toMatch(/Data does not exists/i);
+  });
 
   // Error Authorization
   test('should return HTTP status code 401 when no authorization', async () => {

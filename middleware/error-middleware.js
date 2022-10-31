@@ -21,7 +21,7 @@ function errorMiddleware(err, req, res, next) {
 		});
 	} else if (err.name === "SequelizeForeignKeyConstraintError") {
 		code = 400;
-		message = "User does not exists";
+		message = "Data does not exists";
 	} else if (err.name === "UserNotFound" || err.name === "WrongPassword") {
 		code = 401;
 		message = "Email or Password is wrong";
