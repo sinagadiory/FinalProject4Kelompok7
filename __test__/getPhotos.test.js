@@ -155,5 +155,13 @@ describe('GET /photos', () => {
       .expect(401);
     expect(body.message).toMatch(/unauthorized/i);
   });
+  test('should return HTTP status code 500', async () => {
+    const { body } = await request(app)
+      .get('/photos')
+      .send({ err: "Internal Server Error" })
+      .set('Authorization', `Bearer ${userToken}`)
+      .expect(500);
+    expect(body.message).toMatch(/Internal Server Error/i)
+  })
 });
 
