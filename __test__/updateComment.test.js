@@ -100,7 +100,7 @@ describe('PUT /comments/:id', () => {
     // error
     test('should return HTTP code 403 when put comment forbiden', async () => {
         const { body } = await request(app)
-          .put('/photos/1')
+          .put('/comments/2')
           .send({
             "title": "Foto Sinaga 1"
           })
