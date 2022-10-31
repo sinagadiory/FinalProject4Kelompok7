@@ -10,7 +10,7 @@ class CommentController {
                         {model: Photo, attributes:['id','title','caption','poster_image_url']}
                     ]
                 });
-            res.status(200).json(result);
+            res.status(200).json({comments: result});
         } catch (error) {
             res.json(error);
         }

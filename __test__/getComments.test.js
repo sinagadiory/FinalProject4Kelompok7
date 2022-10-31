@@ -12,7 +12,7 @@ const user1 = {
     password: "murteza123?",
     profile_image_url: "https://res.cloudinary.com/dt3pzvmfg/image/upload/v1658573452/x1bbffnq1cold8srit8p.jpg",
     age: 21,
-    phone_number: "0812732322",
+    phone_number: "812732322",
     createdAt: new Date(),
     updatedAt: new Date()
 };
@@ -24,7 +24,7 @@ const user2 = {
     password: "dhani123?",
     profile_image_url: "https://res.cloudinary.com/dt3pzvmfg/image/upload/v1658573452/x1bbffnq1cold8srit8p.jpg",
     age: 21,
-    phone_number: "0812732322",
+    phone_number: "812732322",
     createdAt: new Date(),
     updatedAt: new Date()
 }
@@ -98,82 +98,85 @@ afterAll(async () => {
 
 describe('PUT /comments/:id', () => {
     // error
-    test('should return HTTP code 403 when put comment forbiden', async () => {
-        const { body } = await request(app)
-          .put('/comments/2')
-          .send({
-            comment: 'update test' 
-          })
-          .set('Authorization', `Bearer ${userToken1}`)
-          .expect(403);
-        expect(body.message).toMatch(/Anda Tidak Diijinkan!!/i)
-    });
-    test('should return HTTP status code 404 when comment not found', async () => {
-        const { body } = await request(app)
-          .put('/comments/100')
-          .set('Authorization', `Bearer ${userToken1}`)
-          .send({
-            comment: 'update test' 
-          })
-          .expect(404);
-        expect(body.message).toMatch(/data not found/i);
-    });
     test('should return HTTP status code 401 when no authorization', async () => {
         const { body } = await request(app)
-          .put('/comments/1')
-          .send({
-            comment: 'update test'
-          })
+          .get('/comments')
           .expect(401);
         expect(body.message).toMatch(/unauthorized/i);
     });
     test('should return HTTP status code 401 when no token provided', async () => {
         const { body } = await request(app)
-          .put('/comments/1')
+          .get('/comments')
           .set('Authorization', 'Bearer ')
-          .send({
-            comment: 'update test'
-          })
           .expect(401);
         expect(body.message).toMatch(/invalid token/i);
     });
     test('should return HTTP status code 401 when no token provided', async () => {
         const { body } = await request(app)
-          .put('/comments/1')
-          .set('Authorization', 'Bearer wrong.token.input')
-          .send({
-            comment: 'update test'
-          })
-          .expect(401);
+        .get('/comments')
+        .set('Authorization', 'Bearer wrong.token.input')
+        .expect(401);
         expect(body.message).toMatch(/invalid token/i);
     });
     test('should return HTTP status code 401 when user does not exist', async () => {
         const { body } = await request(app)
-          .put('/photos/1')
-          .set('Authorization', `Bearer ${userNotExistsToken}`)
-          .send({
-            comment: 'update test'
-          })
-          .expect(401);
+        .get('/comments')
+        .set('Authorization', `Bearer ${userNotExistsToken}`)
+        .expect(401);
         expect(body.message).toMatch(/unauthorized/i);
     });
 
     // success
     test('should return HTTP status code 200', async () => {
         const { body } = await request(app)
-          .put('/comments/1')
-          .send({
-            comment: 'update test'
-          })
+          .get('/comments')
           .set('Authorization', `Bearer ${userToken1}`)
-          .expect(201);
-        expect(body).toEqual({
-            id: 1,
-            UserId: CommentTest1.UserId,
-            PhotoId: CommentTest1.PhotoId,
-            comment: 'update test',
-            createdAt: expect.any(String),
-            updatedAt: expect.any(String),
-        })
+          .expect(200);
+        // expect(body.length).toBe(2);
+        expect(body).toEqual(
+        { comments: [
+            {
+                id: 1,
+                UserId: CommentTest1.UserId,
+                PhotoId: CommentTest1.PhotoId,
+                comment: CommentTest1.comment,
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String),
+                User: {
+                    id: 1,
+                    username: user1.username,
+                    profile_image_url: user1.profile_image_url,
+                    phone_number: parseInt(user1.phone_number)
+                },
+                Photo: {
+                    id: 1,
+                    title: defaultPhoto1.title,
+                    caption: defaultPhoto1.caption,
+                    poster_image_url: defaultPhoto1.poster_image_url
+                },
+            },
+            {
+                id: 2,
+                UserId: CommentTest2.UserId,
+                PhotoId: CommentTest2.PhotoId,
+                comment: CommentTest2.comment,
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String),
+                User: {
+                    id: 2,
+                    username: user2.username,
+                    profile_image_url: user2.profile_image_url,
+                    phone_number: parseInt(user2.phone_number)
+                },
+                Photo: {
+                    id: 2,
+                    title: defaultPhoto2.title,
+                    caption: defaultPhoto2.caption,
+                    poster_image_url: defaultPhoto2.poster_image_url
+                },
+            }
+        ]}
+            
+        );
     });
 });
