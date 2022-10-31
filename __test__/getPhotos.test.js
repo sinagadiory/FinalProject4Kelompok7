@@ -155,5 +155,17 @@ describe('GET /photos', () => {
       .expect(401);
     expect(body.message).toMatch(/unauthorized/i);
   });
+  test('should return HTTP status code 404 when data does not exist', async () => {
+    await queryInterface.bulkDelete('Photos', null, {
+        truncate: true,
+        restartIdentity: true,
+        cascade: true
+    });
+    const { body } = await request(app)
+    .get('/photos')
+    .set('Authorization', `Bearer ${userToken}`)
+    .expect(404);
+    expect(body.message).toMatch(/Data not found/i);
+});
 });
 

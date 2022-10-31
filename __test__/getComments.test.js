@@ -97,34 +97,7 @@ afterAll(async () => {
 });
 
 describe('PUT /comments/:id', () => {
-    // error
-    test('should return HTTP status code 401 when no authorization', async () => {
-        const { body } = await request(app)
-          .get('/comments')
-          .expect(401);
-        expect(body.message).toMatch(/unauthorized/i);
-    });
-    test('should return HTTP status code 401 when no token provided', async () => {
-        const { body } = await request(app)
-          .get('/comments')
-          .set('Authorization', 'Bearer ')
-          .expect(401);
-        expect(body.message).toMatch(/invalid token/i);
-    });
-    test('should return HTTP status code 401 when no token provided', async () => {
-        const { body } = await request(app)
-        .get('/comments')
-        .set('Authorization', 'Bearer wrong.token.input')
-        .expect(401);
-        expect(body.message).toMatch(/invalid token/i);
-    });
-    test('should return HTTP status code 401 when user does not exist', async () => {
-        const { body } = await request(app)
-        .get('/comments')
-        .set('Authorization', `Bearer ${userNotExistsToken}`)
-        .expect(401);
-        expect(body.message).toMatch(/unauthorized/i);
-    });
+    
 
     // success
     test('should return HTTP status code 200', async () => {
@@ -178,5 +151,46 @@ describe('PUT /comments/:id', () => {
         ]}
             
         );
+    });
+
+    // error
+    test('should return HTTP status code 401 when no authorization', async () => {
+        const { body } = await request(app)
+          .get('/comments')
+          .expect(401);
+        expect(body.message).toMatch(/unauthorized/i);
+    });
+    test('should return HTTP status code 401 when no token provided', async () => {
+        const { body } = await request(app)
+          .get('/comments')
+          .set('Authorization', 'Bearer ')
+          .expect(401);
+        expect(body.message).toMatch(/invalid token/i);
+    });
+    test('should return HTTP status code 401 when no token provided', async () => {
+        const { body } = await request(app)
+        .get('/comments')
+        .set('Authorization', 'Bearer wrong.token.input')
+        .expect(401);
+        expect(body.message).toMatch(/invalid token/i);
+    });
+    test('should return HTTP status code 401 when user does not exist', async () => {
+        const { body } = await request(app)
+        .get('/comments')
+        .set('Authorization', `Bearer ${userNotExistsToken}`)
+        .expect(401);
+        expect(body.message).toMatch(/unauthorized/i);
+    });
+    test('should return HTTP status code 404 when data does not exist', async () => {
+        await queryInterface.bulkDelete('Comments', null, {
+            truncate: true,
+            restartIdentity: true,
+            cascade: true
+        });
+        const { body } = await request(app)
+        .get('/comments')
+        .set('Authorization', `Bearer ${userToken1}`)
+        .expect(404);
+        expect(body.message).toMatch(/Data not found/i);
     });
 });

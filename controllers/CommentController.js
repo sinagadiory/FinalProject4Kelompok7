@@ -2,7 +2,7 @@
 const { User,Photo,Comment } = require("./../models/index");
 
 class CommentController {
-    static async getComments(req, res) {
+    static async getComments(req, res, next) {
         try {
             const result = await Comment.findAll({
                     include:[
@@ -10,9 +10,10 @@ class CommentController {
                         {model: Photo, attributes:['id','title','caption','poster_image_url']}
                     ]
                 });
+            if (result.length === 0) throw { name: 'ErrNotFound' };
             res.status(200).json({comments: result});
-        } catch (error) {
-            res.json(error);
+        } catch (err) {
+            next(err);
         }
     }
 

@@ -1,7 +1,7 @@
 const { User, Photo, Comment } = require("./../models/index");
 
 class PhotoController {
-    static async getPhotos(req, res) {
+    static async getPhotos(req, res, next) {
         try {
             const result = await Photo.findAll({
                 include: [
@@ -15,9 +15,10 @@ class PhotoController {
                 ],
                 order: [['id', 'ASC']]
             });
+            if (result.length === 0) throw { name: 'ErrNotFound' };
             res.status(200).json(result)
-        } catch (error) {
-            res.json(error)
+        } catch (err) {
+            next(err)
         }
     }
 
