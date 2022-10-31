@@ -1,5 +1,5 @@
 
-const { User,Photo,Comment } = require("./../models/index");
+const { User, Photo, Comment } = require("./../models/index");
 
 class CommentController {
     static async getComments(req, res) {
@@ -60,10 +60,10 @@ class CommentController {
             if (commentById.UserId !== userId) throw { name: 'not allowed' };
 
             const result = await Comment.destroy(
-                { where: {id} }
+                { where: {id}, returning: true, plain: true }
             );
 
-            res.status(200).json({ message:"Your Comment has been successfully deleted" });
+            res.status(200).json({ message:"Your Comment has been successfully deleted", data: commentById});
         }catch (err){
             next(err)
         }
