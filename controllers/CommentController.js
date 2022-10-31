@@ -21,12 +21,12 @@ class CommentController {
             const { comment, PhotoId } = req.body;
             const UserId = req.user.id;
             const result = await Comment.create({ UserId, PhotoId, comment }, {returning:true});
-            res.status(200).json(result);
+            res.status(201).json(result);
         }catch (err) {
             next(err);
         }
-    }
-// sisa update delete
+    } 
+
     static async UpdateComment(req,res,next){
         try {
             const { id } = req.params;
@@ -60,10 +60,10 @@ class CommentController {
             if (commentById.UserId !== userId) throw { name: 'not allowed' };
 
             const result = await Comment.destroy(
-                { where: {id} }
+                { where: {id}, returning: true, plain: true }
             );
 
-            res.status(200).json({ message:"Your Comment has been successfully deleted" });
+            res.status(200).json({ message:"Your Comment has been successfully deleted", data: commentById});
         }catch (err){
             next(err)
         }
