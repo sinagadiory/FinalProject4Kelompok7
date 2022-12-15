@@ -8,6 +8,7 @@
     "test": "npx jest --runInBand --coverage",
     "db:create:test": "sequelize db:create --env test",
     "db:migrate:test": "sequelize db:migrate --env test",
+    "db:migrate:undo:test": "sequelize db:migrate:undo:all --env test",
     "db:drop:test": "sequelize db:drop --env test",
     "tidy": "prettier . --write"
   },

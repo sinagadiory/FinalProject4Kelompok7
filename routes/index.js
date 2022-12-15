@@ -9,11 +9,11 @@ const commentRouter = require("./comment-routes");
 const errorMiddleware = require("./../middleware/error-middleware");
 const authenticationMiddleware = require("./../middleware/authentication-middleware");
 
-router.use("/users",usersRouter);
+router.use("/users", usersRouter);
 
 router.use(authenticationMiddleware);
 router.use("/photos", photosRouter);
-router.use("/medsos", medsosRouter);
+router.use("/socialmedias", medsosRouter);
 router.use("/comments", commentRouter);
 
 router.use((req, res, next) => {
