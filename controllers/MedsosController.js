@@ -21,7 +21,7 @@ class MedsosController {
 			const { name, social_media_url } = req.body
 			const UserId = req.user.id
 			const result = await Medsos.create({ name, social_media_url, UserId }, { returning: true })
-			res.status(201).json(result)
+			res.status(201).json(result);
 		} catch (err) {
 			next(err)
 		}
